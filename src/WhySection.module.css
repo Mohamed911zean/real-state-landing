@@ -1,0 +1,147 @@
+.section {
+  padding: 8rem 0;
+  background: var(--white);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-family: var(--font-main);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--black);
+  letter-spacing: -0.03em;
+}
+
+.title span {
+  color: var(--gray-400);
+}
+
+.maskContainer {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 300px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.maskImageWrapper {
+  position: absolute;
+  inset: 0;
+}
+
+.maskImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.svgOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.captionRow {
+  text-align: center;
+  margin-bottom: 8rem;
+}
+
+.caption {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--black);
+  line-height: 1.6;
+}
+
+.caption .silver {
+  color: var(--gray-400);
+}
+
+.bottomGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: end;
+}
+
+.rewiredTitle {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  color: var(--black);
+}
+
+.btnPrimary {
+  display: flex;
+  align-items: center;
+  background: var(--black);
+  color: var(--white);
+  padding: 0.9rem 2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 9999px; /* Pill shape */
+  transition: transform var(--transition);
+}
+.btnPrimary:hover {
+  transform: translateY(-2px);
+}
+
+.rightBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.stepsLabel {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.step {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.stepNum {
+  font-size: 0.8rem;
+  color: var(--gray-400);
+  font-weight: 500;
+  margin-top: 0.2rem;
+}
+
+.stepText {
+  font-size: 1.1rem;
+  color: var(--gray-400);
+  line-height: 1.5;
+}
+
+.stepText strong {
+  color: var(--black);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .bottomGrid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .maskContainer {
+    height: 150px;
+  }
+}
