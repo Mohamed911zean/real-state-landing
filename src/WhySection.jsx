@@ -1,76 +1,123 @@
-import styles from './WhySection.module.css'
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default function WhySection() {
+  const sectionRef = useRef(null)
+  const videoRef = useRef(null)
+  const contentRef = useRef(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Video Reveal & Parallax
+      gsap.fromTo(videoRef.current, 
+        { scale: 1.1, opacity: 0 }, 
+        { 
+          scale: 1, 
+          opacity: 1, 
+          duration: 1.5, 
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+          }
+        }
+      )
+
+      // Content Stagger Reveal
+      gsap.fromTo(contentRef.current.children, 
+        { y: 50, opacity: 0 }, 
+        { 
+          y: 0, 
+          opacity: 1, 
+          duration: 1, 
+          stagger: 0.2, 
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: contentRef.current,
+            start: 'top 85%',
+          }
+        }
+      )
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section className={styles.section} id="about">
-      <div className="container">
-        <div className={styles.header}>
-          <h2 className={`${styles.title} reveal`}>
-            This isn&apos;t just <span>about real estate.</span>
-          </h2>
-        </div>
-
-        <div className={`${styles.maskContainer} reveal reveal-delay-1`}>
-          <div className={styles.maskImageWrapper}>
-            <video 
-              src="/why-us.mp4" 
-              className={styles.maskImage}
-              autoPlay 
-              loop 
-              muted 
-              playsInline
-            />
-          </div>
-          {/* Chevron SVG mask over the image */}
-          <div className={styles.svgOverlay}>
-            <svg width="100%" height="100%" viewBox="0 0 1000 300" preserveAspectRatio="none">
-              <defs>
-                <mask id="chevronMask">
-                  <rect width="100%" height="100%" fill="white" />
-                  <path d="M 150 0 L 250 150 L 150 300 L 50 300 L 150 150 L 50 0 Z" fill="black" />
-                  <path d="M 350 0 L 450 150 L 350 300 L 250 300 L 350 150 L 250 0 Z" fill="black" />
-                  <path d="M 550 0 L 650 150 L 550 300 L 450 300 L 550 150 L 450 0 Z" fill="black" />
-                  <path d="M 750 0 L 850 150 L 750 300 L 650 300 L 750 150 L 650 0 Z" fill="black" />
-                </mask>
-              </defs>
-              <rect width="100%" height="100%" fill="white" mask="url(#chevronMask)" />
-            </svg>
-          </div>
-        </div>
-
-        <div className={styles.captionRow}>
-          <p className={`${styles.caption} reveal`}>
-            It&apos;s about identity. Progress. Getting unstuck.<br/>
-            You&apos;re not just looking for a place. <span className={styles.silver}>You&apos;re looking<br/>for alignment. That&apos;s what we help you find.</span>
-          </p>
-        </div>
-
-        <div className={styles.bottomGrid}>
-          <div className={`${styles.leftBottom} reveal`}>
-            <h2 className={styles.rewiredTitle}>Real Estate,<br/>Rewired.</h2>
-            <button className={styles.btnPrimary}>
-              Start Your Search
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginLeft: '8px'}}><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-          
-          <div className={`${styles.rightBottom} reveal reveal-delay-1`}>
-            <p className={styles.stepsLabel}>Steps:</p>
-            <div className={styles.step}>
-              <span className={styles.stepNum}>01</span>
-              <p className={styles.stepText}>
-                <strong>Talk to a Real Human.</strong> We match you with an expert who actually listens.
-              </p>
+    <section 
+      ref={sectionRef} 
+      className="py-32 px-6 bg-white overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          {/* Video Container */}
+          <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
+            <div 
+              ref={videoRef}
+              className="aspect-[4/5] md:aspect-square lg:aspect-[4/5] bg-neutral-100"
+            >
+              <video 
+                src="/why-us.mp4" 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-all duration-700" />
             </div>
-            <div className={styles.step}>
-              <span className={styles.stepNum}>02</span>
-              <p className={styles.stepText}>
-                <strong>Get Clarity.</strong> We define what you really need, not just what&apos;s available.
+            
+            <div className="absolute bottom-8 left-8 right-8 p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 text-white">
+              <p className="text-sm font-bold uppercase tracking-widest mb-2">Our Vision</p>
+              <p className="text-xl font-medium leading-relaxed">
+                "It's about identity. Progress. Getting unstuck. You’re not just looking for a place. You’re looking for alignment."
               </p>
             </div>
           </div>
+
+          {/* Content Container */}
+          <div ref={contentRef} className="space-y-12">
+            <div className="space-y-6">
+              <h2 className="text-5xl md:text-7xl font-bold tracking-tight text-black leading-tight">
+                Real Estate, <br />
+                <span className="text-neutral-400 italic font-serif">Rewired.</span>
+              </h2>
+              <p className="text-xl text-neutral-600 leading-relaxed max-w-xl">
+                At FIND, our agents don’t just work for the brand—they own a part of it. 
+                We give top performers real equity, so they’re invested in more than just your transaction.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+              <div className="space-y-4">
+                <span className="text-4xl font-serif italic text-neutral-300">01.</span>
+                <h3 className="text-xl font-bold">Expert Agents</h3>
+                <p className="text-neutral-500 leading-relaxed">
+                  Certified, supported, and equipped to deliver five-star service every single time.
+                </p>
+              </div>
+              <div className="space-y-4">
+                <span className="text-4xl font-serif italic text-neutral-300">02.</span>
+                <h3 className="text-xl font-bold">Owner Mentality</h3>
+                <p className="text-neutral-500 leading-relaxed">
+                  Our success is tied directly to yours because our agents are stakeholders in the company.
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-8">
+              <button className="px-10 py-5 bg-black text-white rounded-full font-bold text-lg hover:scale-105 transition-all flex items-center gap-3 shadow-xl shadow-black/10">
+                Start Your Search
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
-        
       </div>
     </section>
   )

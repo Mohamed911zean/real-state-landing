@@ -1,8 +1,11 @@
 /* ─── Google Fonts ──────────────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ─── Lenis required overrides ──────────────────────────────────────────── */
-/* Lenis manages scroll via rAF; native scroll-behavior conflicts with it   */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -17,25 +20,10 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* ─── Design tokens ─────────────────────────────────────────────────────── */
 :root {
   --black:      #111111;
   --white:      #ffffff;
-  --gray-100:   #f5f5f5;
-  --gray-200:   #e5e5e5;
-  --gray-400:   #a3a3a3;
-  --gray-600:   #525252;
-  --gray-900:   #171717;
   --font-main:  'Inter', system-ui, -apple-system, sans-serif;
-  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  --max-w:      1400px;
-}
-
-/* ─── Reset ─────────────────────────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin:  0;
-  padding: 0;
 }
 
 /* NOTE: Do NOT set scroll-behavior: smooth here — Lenis handles that */
@@ -45,36 +33,14 @@ body {
   background:              var(--white);
   color:                   var(--black);
   font-family:             var(--font-main);
-  font-size:               16px;
-  line-height:             1.5;
   overflow-x:              hidden;
   -webkit-font-smoothing:  antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering:          optimizeLegibility;
 }
 
-img    { display: block; max-width: 100%; }
-button { cursor: pointer; font-family: var(--font-main); border: none; background: none; }
-a      { text-decoration: none; color: inherit; }
-ul     { list-style: none; }
-
-/* ─── Layout utility ────────────────────────────────────────────────────── */
-.container {
-  width:      100%;
-  max-width:  var(--max-w);
-  margin:     0 auto;
-  padding:    0 5%;
-}
-
-/* ─── Reveal — initial hidden state overridden by GSAP in useScrollReveal ─ */
-/* We keep visual defaults here; GSAP sets opacity:0/translateY on mount   */
 .reveal { will-change: opacity, transform; }
 
 /* ─── Scrollbar ─────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar       { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--white); }
-::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
-
-/* ─── Selection ─────────────────────────────────────────────────────────── */
-::selection { background: var(--black); color: var(--white); }
+::-webkit-scrollbar-thumb { background: #e5e5e5; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a3a3a3; }
